@@ -14,6 +14,16 @@
  * @returns {string}
  */
 function interpolateNames(name1, name2) {
+  const maxLength = Math.max(name1.length, name2.length);
+  let result = '';
+  for (let i = 0; i < maxLength; i += 1) {
+    if (i % 2) {
+      result += name2[i] || ' ';
+    } else {
+      result += name1[i] || ' ';
+    }
+  }
+  return result;
 }
 
 module.exports = { interpolateNames };

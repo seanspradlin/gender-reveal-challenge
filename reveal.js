@@ -4,6 +4,7 @@ const open = require('open');
 const fs = require('fs');
 const { URL } = require('url');
 const http = require('http');
+const { generateToken } = require('./lib/generate-token');
 
 async function createServer(port) {
   return new Promise((resolve, reject) => {
@@ -34,7 +35,11 @@ async function createServer(port) {
 async function execute() {
   const port = 8080;
   await createServer(port);
-  const code = 123;
+  const code = generateToken({
+    mother: 'Nicole',
+    father: 'Calvin',
+    yearsTogether: 4,
+  });
   const qs = querystring.stringify({ gendercode: code });
   const uri = `http://localhost:${port}/index.html?${qs}`;
   await open(uri, { wait: true });
