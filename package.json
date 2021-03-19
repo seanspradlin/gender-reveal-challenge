@@ -4,6 +4,7 @@
   "description": "Code challenge for gender reveal",
   "main": "reveal.js",
   "scripts": {
+    "start": "node reveal.js",
     "test": "mocha **/*.spec.js"
   },
   "keywords": [
@@ -21,5 +22,8 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "mocha": "^8.3.2"
+  },
+  "dependencies": {
+    "open": "^8.0.3"
   }
 }
