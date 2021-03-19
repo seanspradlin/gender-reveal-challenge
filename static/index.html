@@ -1,227 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-}
 
-.container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-color: #00b85c;
-}
-.container.complete .cover {
-  animation: open-cover 3s;
-  animation-fill-mode: forwards;
-}
-.container.complete .body {
-  animation: open-gift 3s;
-  animation-fill-mode: forwards;
-}
-.container.complete .congrats {
-  animation: show-congrats 1s 3.5s;
-  animation-fill-mode: forwards;
-}
-.container.color {}
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
 
-.countdown {
-  color: white;
-}
+    .container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: #00b85c;
+    }
 
-.gift {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  position: relative;
-  margin-top: 120px;
-}
-.gift .cover {
-  width: 120px;
-  height: 16px;
-  position: absolute;
-  top: 0px;
-  background-color: #fffd85;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
-}
-.gift .body {
-  width: 100px;
-  height: 100px;
-  background-color: #fffd85;
-}
-.gift .body:before, .gift .body:after {
-  width: 100px;
-  height: 16px;
-  content: "";
-  display: block;
-  background-color: #fff;
-  position: absolute;
-  top: 50%;
-}
-.gift .body:after {
-  transform: rotate(90deg);
-  top: 42%;
-}
+    .container.complete .cover {
+      animation: open-cover 3s;
+      animation-fill-mode: forwards;
+    }
 
-.loading {
-  width: 200px;
-  height: 8px;
-  background-color: #fff;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-top: 24px;
-}
-.loading .bar {
-  width: 0;
-  height: 100%;
-  background-color: #fffd85;
-}
+    .container.complete .body {
+      animation: open-gift 3s;
+      animation-fill-mode: forwards;
+    }
 
-.congrats {
-  color: white;
-  opacity: 0;
-  font-size: 70pt;
-}
+    .container.complete .congrats {
+      animation: show-congrats 1s 3.5s;
+      animation-fill-mode: forwards;
+    }
 
-@keyframes open-cover {
-  0% {
-    top: 0px;
-    transform: rotate(0deg);
-    opacity: 1;
-  }
-  10% {
-    top: -10px;
-    transform: rotate(5deg);
-  }
-  20% {
-    top: 0px;
-    transform: rotate(0deg);
-  }
-  80% {
-    top: -16px;
-    opacity: 1;
-    transform: rotate(5deg);
-  }
-  100% {
-    top: -100px;
-    opacity: 0;
-    transform: translateX(50px) rotate(120deg);
-  }
-}
-@keyframes open-gift {
-  0% {
-    transform: rotate(0deg);
-    opacity: 1;
-  }
-  10% {
-    transform: rotate(-2deg);
-  }
-  20% {
-    transform: rotate(0deg);
-  }
-  80% {
-    opacity: 1;
-    transform: rotate(-2deg);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-25px) rotate(-60deg);
-  }
-}
-@keyframes show-congrats {
-  0% {
-    opacity: 0;
-    transform: scale(0);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h1 class="countdown">5</h1>
-            <div class="gift">
-              <div class="cover"></div>
-              <div class="body"></div>
-            </div>
-            <div class="loading">
-              <div class="bar"></div>
-            </div>
-            <h1 class="congrats"></h1>
-          </div>
-          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-          <script>
-let gender = getGender(getUrlParameter("gendercode"));
-var percent = 0
-var countDown = 5
+    .container.color {}
 
-var timer = setInterval(() => {
-  $(".bar").css("width", percent+"%")
-  percent += 1
-  if (percent % 20 == 0) {
-    countDown --
-    $(".countdown").text(countDown)
-  }
-  if (percent == 100) {
-    $(".container").addClass("complete")
-    $(".loading").css("display", "none")
-    $(".countdown").css("display", "none")
+    .countdown {
+      color: white;
+    }
 
-  }
-  if (percent > 170) {
-    clearInterval(timer)
-    setMessageByGender(gender);
-    setContainerColor(gender);
-  }
-}, 50)
+    .gift {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+      margin-top: 120px;
+    }
 
-function getUrlParameter(name) {
-  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-  var results = regex.exec(location.search);
-  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-};
-function getGender(gendercode){
-  if (gendercode == 123) return "boy";
-  if (gendercode == 321) return "girl";
-}
-function setMessageByGender(gender){
-  let congratsMessage = "It's a ";
-  if (gender == "boy"){
-    congratsMessage += "BOY!"
-  }
-  if (gender == "girl"){
-    congratsMessage += "GIRL!"
-  }
-  $('.congrats').text(congratsMessage);
-}
-function setContainerColor(gender){
-  if (gender == "boy") {
-    $(".container").css("background-color", "#00d4fa");
-  }
-  if (gender == "girl") {
-    $(".container").css("background-color", "#ff89c0");
-  }
-}
-console.log('this html was borrowed heavily from https://codepen.io/bobson801104/pen/NzLLaE with much grateful thanks! Check out the real hero https://codepen.io/bobson801104')
+    .gift .cover {
+      width: 120px;
+      height: 16px;
+      position: absolute;
+      top: 0px;
+      background-color: #fffd85;
+      box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    }
 
-          </script>
-    </body>
+    .gift .body {
+      width: 100px;
+      height: 100px;
+      background-color: #fffd85;
+    }
+
+    .gift .body:before,
+    .gift .body:after {
+      width: 100px;
+      height: 16px;
+      content: "";
+      display: block;
+      background-color: #fff;
+      position: absolute;
+      top: 50%;
+    }
+
+    .gift .body:after {
+      transform: rotate(90deg);
+      top: 42%;
+    }
+
+    .loading {
+      width: 200px;
+      height: 8px;
+      background-color: #fff;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 24px;
+    }
+
+    .loading .bar {
+      width: 0;
+      height: 100%;
+      background-color: #fffd85;
+    }
+
+    .congrats {
+      color: white;
+      opacity: 0;
+      font-size: 70pt;
+    }
+
+    @keyframes open-cover {
+      0% {
+        top: 0px;
+        transform: rotate(0deg);
+        opacity: 1;
+      }
+
+      10% {
+        top: -10px;
+        transform: rotate(5deg);
+      }
+
+      20% {
+        top: 0px;
+        transform: rotate(0deg);
+      }
+
+      80% {
+        top: -16px;
+        opacity: 1;
+        transform: rotate(5deg);
+      }
+
+      100% {
+        top: -100px;
+        opacity: 0;
+        transform: translateX(50px) rotate(120deg);
+      }
+    }
+
+    @keyframes open-gift {
+      0% {
+        transform: rotate(0deg);
+        opacity: 1;
+      }
+
+      10% {
+        transform: rotate(-2deg);
+      }
+
+      20% {
+        transform: rotate(0deg);
+      }
+
+      80% {
+        opacity: 1;
+        transform: rotate(-2deg);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(-25px) rotate(-60deg);
+      }
+    }
+
+    @keyframes show-congrats {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="countdown">5</h1>
+    <div class="gift">
+      <div class="cover"></div>
+      <div class="body"></div>
+    </div>
+    <div class="loading">
+      <div class="bar"></div>
+    </div>
+    <h1 class="congrats"></h1>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    const gender = getGender(getUrlParameter("gendercode"));
+    let percent = 0
+    let countDown = 5
+
+    const timer = setInterval(() => {
+      $(".bar").css("width", percent + "%")
+      percent += 1
+      if (percent % 20 == 0) {
+        countDown--
+        $(".countdown").text(countDown)
+      }
+      if (percent == 100) {
+        $(".container").addClass("complete")
+        $(".loading").css("display", "none")
+        $(".countdown").css("display", "none")
+
+      }
+      if (percent > 170) {
+        clearInterval(timer)
+        setMessageByGender(gender);
+        setContainerColor(gender);
+      }
+    }, 50)
+
+    function getUrlParameter(name) {
+      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+      const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+      const results = regex.exec(location.search);
+      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+
+    function getGender(gendercode) {
+      if (gendercode == 123) return "boy";
+      if (gendercode == 321) return "girl";
+    }
+
+    function setMessageByGender(gender) {
+      let congratsMessage = "It's a ";
+      if (gender == "boy") {
+        congratsMessage += "BOY!"
+      }
+      if (gender == "girl") {
+        congratsMessage += "GIRL!"
+      }
+      $('.congrats').text(congratsMessage);
+    }
+
+    function setContainerColor(gender) {
+      if (gender == "boy") {
+        $(".container").css("background-color", "#00d4fa");
+      }
+      if (gender == "girl") {
+        $(".container").css("background-color", "#ff89c0");
+      }
+    }
+
+    console.log('this html was borrowed heavily from https://codepen.io/bobson801104/pen/NzLLaE with much grateful thanks! Check out the real hero https://codepen.io/bobson801104')
+
+  </script>
+</body>
+
 </html>
